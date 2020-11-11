@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head> <meta charset="utf-8">
+    <title>library</title>
+	 <style>
+            html,body{
+                height: 100%;
+                padding: 0px;
+                margin: 0px;
+            }
+			#app{
+			//background-color:yellow;
+			height:100%;
+			width:100%;
+			}
+			
+			#menu{
+			background-color:#23B14D;
+			height:45%;
+			width:100%;
+			position:absolute;
+			top:28%;
+			text-align:center;
+			vertical-align:middle;
+			}
+			#inner{
+
+			height:15%;
+			width:100%;
+			margin: 6% auto ;
+			padding: 170px 0px;
+			position:relative;
+			font-size:80px;
+
+			}
+			
+        </style>
+</head>
+<body>
+	<div id="app" >
+		<div id="menu" >
+			<div id="inner" >
+			进馆成功!</br>
+			{{  date | formatDate }}
+			</div>
+		</div>
+	</div>
+<script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+<script>
+    var padDate = function(value){
+        return value < 10 ? '0' + value :value;
+    }
+    var app = new Vue({
+        el: '#app',
+        data: {
+            date: new Date()
+        },
+        filters: {
+            formatDate: function (value) {
+                var date = new Date(value);
+                var year = date.getFullYear();
+                var month = padDate(date.getMonth() + 1);
+                var day = padDate(date.getDay() + 8);
+                var hours = padDate(date.getHours());
+                var minutes = padDate(date.getMinutes());
+                var seconds = padDate(date.getSeconds());
+                // 整理并返回
+                return year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
+            }
+        },
+        mounted: function () {
+            var _this = this; // 指向this 变量作用域一致;
+            this.timer = setInterval(function() {
+                _this.date = new Date(); // 修改date
+            },5000);
+        },
+        beforeDestroy: function() {
+            if (this.timer) {
+                clearInterval(this.timer);
+            }
+        }
+        // created: function () {
+        //     console.log(this.a);
+        // },
+        // mounted: function () {
+        //     var _this = this; //声明一个变量指向 Vue 实例 this，保证作用域一致
+        //     this.timer = setInterval (function () {
+        //         this.date = new Date();
+        //         console.log(this.date);// 修改date
+        //     },1000);
+             
+        // },
+        // beforeDestory: function () {
+        //     if (this.timer) {
+        //         clearInterval(this.timer);  //在 Vue 实例销毁前，清除我们的定时器
+ 
+        //     }
+        // }
+    })
+</script>
+</body>
+</html>
